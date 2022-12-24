@@ -4,6 +4,3 @@
 [submodule "imgui"]
 	path = imgui
 	url = https://github.com/ocornut/imgui
-[submodule "tomlc99"]
-	path = tomlc99
-	url = https://github.com/cktan/tomlc99
