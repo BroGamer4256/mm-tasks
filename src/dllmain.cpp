@@ -59,13 +59,13 @@ taskList **tasks = (taskList **)0x14CC105F8;
 extern "C" {
 #endif
 
-__declspec(dllexport) void D3DInit (IDXGISwapChain *swapChain, ID3D11Device *device, ID3D11DeviceContext *deviceContext) {
+__declspec (dllexport) void D3DInit (IDXGISwapChain *swapChain, ID3D11Device *device, ID3D11DeviceContext *deviceContext) {
 	DXGI_SWAP_CHAIN_DESC sd;
 	ID3D11Texture2D *pBackBuffer;
 
 	pContext = deviceContext;
 	swapChain->GetDesc (&sd);
-	swapChain->GetBuffer (0, __uuidof(ID3D11Texture2D), (LPVOID *)&pBackBuffer);
+	swapChain->GetBuffer (0, __uuidof (ID3D11Texture2D), (LPVOID *)&pBackBuffer);
 	device->CreateRenderTargetView (pBackBuffer, NULL, &mainRenderTargetView);
 	pBackBuffer->Release ();
 
@@ -79,7 +79,7 @@ __declspec(dllexport) void D3DInit (IDXGISwapChain *swapChain, ID3D11Device *dev
 	ImGui_ImplDX11_Init (device, pContext);
 }
 
-__declspec(dllexport) void onFrame (IDXGISwapChain *chain) {
+__declspec (dllexport) void onFrame (IDXGISwapChain *chain) {
 	ImGui_ImplDX11_NewFrame ();
 	ImGui_ImplWin32_NewFrame ();
 	ImGui::NewFrame ();
@@ -106,7 +106,6 @@ __declspec(dllexport) void onFrame (IDXGISwapChain *chain) {
 		}
 		ImGui::EndTable ();
 	}
-
 	ImGui::End ();
 
 	ImGui::EndFrame ();
