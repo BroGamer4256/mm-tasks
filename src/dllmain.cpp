@@ -90,12 +90,13 @@ __declspec (dllexport) void onResize (IDXGISwapChain *swapChain) {
 	pBackBuffer->Release ();
 }
 
+bool firstFrame = true;
 __declspec (dllexport) void onFrame (IDXGISwapChain *chain) {
 	ImGui_ImplDX11_NewFrame ();
 	ImGui_ImplWin32_NewFrame ();
 	ImGui::NewFrame ();
 
-	ImGui::SetNextWindowSize (ImVec2 (700, 70), ImGuiCond_FirstUseEver);
+	ImGui::SetNextWindowSize (ImVec2 (400, 400), ImGuiCond_FirstUseEver);
 	ImGui::SetNextWindowPos (ImVec2 (0, 0), ImGuiCond_FirstUseEver);
 	if (ImGui::Begin ("Tasks", 0, 0)) {
 		ImGui::BeginTable ("TasksTable", 3, ImGuiTableFlags_Borders | ImGuiTableFlags_Resizable);
@@ -118,6 +119,11 @@ __declspec (dllexport) void onFrame (IDXGISwapChain *chain) {
 		ImGui::EndTable ();
 	}
 	ImGui::End ();
+
+	if (firstFrame) {
+		ImGui::SetWindowFocus (0);
+		firstFrame = false;
+	}
 
 	ImGui::EndFrame ();
 	ImGui::Render ();
