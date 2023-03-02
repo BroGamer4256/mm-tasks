@@ -65,7 +65,7 @@ __declspec (dllexport) void D3DInit (IDXGISwapChain *swapChain, ID3D11Device *de
 
 	pContext = deviceContext;
 	swapChain->GetDesc (&sd);
-	swapChain->GetBuffer (0, __uuidof (ID3D11Texture2D), (LPVOID *)&pBackBuffer);
+	swapChain->GetBuffer (0, __uuidof (ID3D11Texture2D), (void **)&pBackBuffer);
 	device->CreateRenderTargetView (pBackBuffer, NULL, &mainRenderTargetView);
 	pBackBuffer->Release ();
 
@@ -77,6 +77,17 @@ __declspec (dllexport) void D3DInit (IDXGISwapChain *swapChain, ID3D11Device *de
 	io.ConfigFlags = ImGuiConfigFlags_NoMouseCursorChange;
 	ImGui_ImplWin32_Init (window);
 	ImGui_ImplDX11_Init (device, pContext);
+}
+
+__declspec (dllexport) void D3DResize (IDXGISwapChain *swapChain) {
+	ID3D11Texture2D *pBackBuffer;
+	ID3D11Device *device;
+
+	swapChain->GetDevice (__uuidof (ID3D11Device), (void **)&device);
+	device->GetImmediateContext (&pContext);
+	swapChain->GetBuffer (0, __uuidof (ID3D11Texture2D), (void **)&pBackBuffer);
+	device->CreateRenderTargetView (pBackBuffer, NULL, &mainRenderTargetView);
+	pBackBuffer->Release ();
 }
 
 __declspec (dllexport) void onFrame (IDXGISwapChain *chain) {
